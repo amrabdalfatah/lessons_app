@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lessons/routes.dart';
 
 import '../data/all_data.dart';
+import 'widgets/lesson.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,26 +16,17 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ),
-          child: ListView.separated(
+          child: ListView.builder(
             itemBuilder: (context, index) {
-              return ListTile(
-                tileColor: Colors.orange,
-                onTap: () {
-                  Navigator.of(context).pushNamed(
-                    AppRoutes.lesson,
-                    arguments: lessons[index],
-                  );
-                },
-                title: Text(
-                  lessons[index].title,
-                ),
+              return LessonItem(
+                lesson: lessons[index],
               );
             },
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: 16,
-              );
-            },
+            // separatorBuilder: (context, index) {
+            //   return const SizedBox(
+            //     height: 16,
+            //   );
+            // },
             itemCount: lessons.length,
           ),
         ),

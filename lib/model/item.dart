@@ -1,9 +1,7 @@
-import 'package:audioplayers/audioplayers.dart';
-
 class Item {
   final String title;
   final String image;
-  final AudioPlayer audio;
+  final String audio;
 
   const Item({
     required this.title,

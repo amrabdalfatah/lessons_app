@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lessons/model/lesson.dart';
+import 'package:lessons/routes.dart';
 
 class LessonScreen extends StatelessWidget {
   const LessonScreen({super.key});
@@ -28,19 +29,27 @@ class LessonScreen extends StatelessWidget {
                 crossAxisSpacing: 2,
               ),
               itemBuilder: (context, index) {
-                return Card(
-                  color: Colors.grey.withOpacity(0.5),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child:
-                            Image.network(parameters.categories[index].image),
-                      ),
-                      Expanded(
-                        child: Text(parameters.categories[index].title),
-                      ),
-                    ],
+                var category = parameters.categories[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      AppRoutes.category,
+                      arguments: category,
+                    );
+                  },
+                  child: Card(
+                    color: Colors.grey.withOpacity(0.5),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(category.image),
+                        ),
+                        Expanded(
+                          child: Text(category.title),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

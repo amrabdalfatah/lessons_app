@@ -3,7 +3,7 @@ import 'package:lessons/model/lesson.dart';
 import '../model/category.dart';
 import '../model/item.dart';
 
-const List<Lesson> lessons = [
+List<Lesson> lessons = [
   Lesson(
     title: "Lesson 001- 010",
     categories: category_lesson_one,
@@ -18,7 +18,7 @@ const List<Lesson> lessons = [
   ),
 ];
 
-const List<Category> category_lesson_one = [
+List<Category> category_lesson_one = [
   Category(
     title: "People",
     image:
@@ -101,41 +101,47 @@ const List<Category> category_lesson_two = [
   ),
 ];
 
-const List<Item> items_category_people = [
+List<Item> items_category_people = [
   Item(
     title: "Elephant",
     image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGlDzyY5N-9Udqt3VS8fM0L0thhRQOxKKpdyFA4K_hw&s",
-    audio: "audio/elephant.mp3",
+    audio: "assets/audio/elephant.mp3",
+    active: false,
   ),
   Item(
     title: "Lion",
     image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGlDzyY5N-9Udqt3VS8fM0L0thhRQOxKKpdyFA4K_hw&s",
-    audio: "audio/moti.mp3",
+        "https://t3.ftcdn.net/jpg/05/69/30/42/360_F_569304262_RGVohUth9wyR5Msa3CoR4XFvMYE8VG1k.jpg",
+    audio: "assets/audio/moti.mp3",
+    active: false,
   ),
   Item(
     title: "Rabbit",
     image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGlDzyY5N-9Udqt3VS8fM0L0thhRQOxKKpdyFA4K_hw&s",
-    audio: "audio/elephant.mp3",
+    audio: "assets/audio/elephant.mp3",
+    active: false,
   ),
   Item(
     title: "Cat",
     image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGlDzyY5N-9Udqt3VS8fM0L0thhRQOxKKpdyFA4K_hw&s",
-    audio: "audio/elephant.mp3",
+    audio: "assets/audio/elephant.mp3",
+    active: false,
   ),
   Item(
     title: "Dog",
     image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGlDzyY5N-9Udqt3VS8fM0L0thhRQOxKKpdyFA4K_hw&s",
-    audio: "audio/elephant.mp3",
+    audio: "assets/audio/elephant.mp3",
+    active: false,
   ),
   Item(
     title: "Fish",
     image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzGlDzyY5N-9Udqt3VS8fM0L0thhRQOxKKpdyFA4K_hw&s",
-    audio: "audio/elephant.mp3",
+    audio: "assets/audio/elephant.mp3",
+    active: false,
   ),
 ];

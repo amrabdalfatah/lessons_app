@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lessons/model/lesson.dart';
-import 'package:lessons/routes.dart';
+import 'package:lessons/views/catgory_screen.dart';
 
 class LessonScreen extends StatelessWidget {
   const LessonScreen({super.key});
@@ -32,9 +32,12 @@ class LessonScreen extends StatelessWidget {
                 var category = parameters.categories[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                      AppRoutes.category,
-                      arguments: category,
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CategoryScreen(
+                          category: category,
+                        ),
+                      ),
                     );
                   },
                   child: Card(

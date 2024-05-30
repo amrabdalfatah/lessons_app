@@ -1,55 +1,93 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:lessons/model/category.dart';
+import 'package:lessons/provider/items_model.dart';
 import 'package:lessons/views/widgets/item.dart';
+import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({super.key});
+  final Category category;
+  const CategoryScreen({
+    super.key,
+    required this.category,
+  });
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  late AudioPlayer player;
-
   @override
   void initState() {
     super.initState();
-    player = AudioPlayer();
   }
 
   @override
   void dispose() {
-    // Release all sources and dispose the player.
-    player.dispose();
     super.dispose();
   }
 
   @override
+  void didChangeDependencies() {
+    Provider.of<ItemModel>(context, listen: false).initialData(widget.category);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final category = ModalRoute.of(context)!.settings.arguments as Category;
     return Scaffold(
       appBar: AppBar(
-        title: Text(category.title),
-      ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          var item = category.items[index];
-          return ItemWidget(
-            image: item.image,
-            title: item.title,
-            playSound: () {
-              player.setReleaseMode(ReleaseMode.stop);
-              // Start the player as soon as the app is displayed.
-              WidgetsBinding.instance.addPostFrameCallback((_) async {
-                await player.setSource(AssetSource(item.audio));
-                await player.resume();
-              });
+        title: Text(widget.category.title),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  onTap: () {
+                    Provider.of<ItemModel>(context, listen: false).playAll(
+                      widget.category,
+                    );
+                  },
+                  child: const Text("Play All"),
+                ),
+                PopupMenuItem(
+                  onTap: () {
+                    // player.stop();
+                  },
+                  child: const Text("Stop"),
+                ),
+              ];
             },
-          );
-        },
-        itemCount: category.items.length,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 300,
+            child: Image.network(
+              Provider.of<ItemModel>(context).image,
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                var item = widget.category.items[index];
+                return ItemWidget(
+                  title: item.title,
+                  isActive: item.active!,
+                  playSound: () {
+                    Provider.of<ItemModel>(context, listen: false).clickItem(
+                      widget.category,
+                      item,
+                    );
+                  },
+                );
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
+              itemCount: widget.category.items.length,
+            ),
+          ),
+        ],
       ),
     );
   }

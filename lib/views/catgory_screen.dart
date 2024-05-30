@@ -18,24 +18,21 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
     Provider.of<ItemModel>(context, listen: false).initialData(widget.category);
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Provider.of<ItemModel>(context, listen: false).disposePlayer();
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
         title: Text(widget.category.title),
         actions: [
           PopupMenuButton(
@@ -51,7 +48,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
                 PopupMenuItem(
                   onTap: () {
-                    // player.stop();
+                    Provider.of<ItemModel>(context, listen: false).stopPop();
                   },
                   child: const Text("Stop"),
                 ),

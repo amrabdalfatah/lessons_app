@@ -113,7 +113,7 @@ List<Item> items_category_people = [
     title: "Lion",
     image:
         "https://t3.ftcdn.net/jpg/05/69/30/42/360_F_569304262_RGVohUth9wyR5Msa3CoR4XFvMYE8VG1k.jpg",
-    audio: "assets/audio/moti.mp3",
+    audio: "assets/audio/imight.mp3",
     active: false,
   ),
   Item(

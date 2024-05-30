@@ -7,18 +7,13 @@ import '../model/item.dart';
 class ItemModel with ChangeNotifier {
   String image = '';
   AudioPlayer player = AudioPlayer();
-  List<String> audios = [];
+  bool isStopped = true;
 
   void initialData(Category category) {
     image = category.items[0].image;
-    audios = category.items.map((element) {
-      return element.audio;
-    }).toList();
-  }
-
-  void changeActive(Item item) {
-    item.active = !(item.active!);
-    notifyListeners();
+    category.items.forEach((element) {
+      element.active = false;
+    });
   }
 
   void clickItem(Category category, Item item) {
@@ -33,21 +28,36 @@ class ItemModel with ChangeNotifier {
   }
 
   void playAll(Category category) async {
-    // Default Way
-    final playlist = ConcatenatingAudioSource(
-      children: List.generate(
-        audios.length,
-        (index) {
-          return AudioSource.asset(audios[index]);
-        },
-      ),
-    );
+    isStopped = true;
+    while (isStopped) {
+      for (var i = 0; i < category.items.length; i++) {
+        if (isStopped) {
+          var duration = await player.setAsset(category.items[i].audio);
+          if (i != 0) {
+            category.items[i - 1].active = false;
+          }
+          category.items[i].active = true;
+          image = category.items[i].image;
+          notifyListeners();
+          player.play();
+          await Future.delayed(duration!);
+        }
+      }
+      category.items.forEach((element) {
+        element.active = false;
+      });
+      notifyListeners();
+    }
+  }
 
-    await player.setAudioSource(
-      playlist,
-      initialIndex: 0,
-      initialPosition: Duration.zero,
-    );
-    player.play();
+  void stopPop() {
+    isStopped = false;
+    player.stop();
+    notifyListeners();
+  }
+
+  void disposePlayer() async {
+    isStopped = false;
+    player.stop();
   }
 }
